@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#2c1810">
+    <title>Walk to Mordor</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<div id="buildTag" style="position:fixed;top:8px;left:8px;z-index:9999;background:#000;color:#fff;padding:4px 8px;font:12px monospace;border-radius:6px;opacity:.8">
+  BUILD: v0.1.25
+</div>
+<body>
+    <div class="container">
+        <header>
+            <h1>🗻 Walk to Mordor</h1>
+            <p class="subtitle">Track your journey through Middle-earth</p>
+        </header>
+
+        <main>
+            <!-- Summary Panel -->
+            <section class="summary-panel">
+                <div class="stat-card">
+                    <div class="stat-label">Total Steps</div>
+                    <div class="stat-value" id="totalSteps">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Distance Walked</div>
+                    <div class="stat-value" id="totalKm">0 km</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Route Progress</div>
+                    <div class="stat-value" id="routeProgress">0%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">vs Frodo</div>
+                    <div class="stat-value" id="vsFromo">0 km</div>
+                </div>
+            </section>
+
+            <!-- Map Display -->
+            <section class="map-section">
+                <h2>Your Journey</h2>
+                <div class="map-wrapper" id="mapWrapper">
+                    <div class="map-container" id="mapContainer">
+                        <img src="assets/Map_of_Middle-Earth.svg" alt="Middle Earth Map" id="mapImage" draggable="false">
+                        <svg id="mapOverlay" viewBox="0 0 1 1" preserveAspectRatio="none">
+                            <polyline id="routeLine" points="" fill="none" stroke="#8B4513" stroke-width="0.003" />
+                            <circle id="myDot" cx="0" cy="0" r="0.008" fill="#FF4444" stroke="#FFF" stroke-width="0.001" />
+                            <circle id="frodoDot" cx="0" cy="0" r="0.008" fill="#4444FF" stroke="#FFF" stroke-width="0.001" />
+                        </svg>
+                    </div>
+                    <div class="map-legend">
+                        <div class="legend-item">
+                            <span class="legend-dot" style="background: #FF4444;"></span>
+                            <span>You</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-dot" style="background: #4444FF;"></span>
+                            <span>Frodo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Frodo Day Selector -->
+                <div class="frodo-selector">
+                    <label for="frodoDaySlider">Frodo's Journey Day:</label>
+                    <div class="slider-container">
+                        <input type="range" id="frodoDaySlider" min="0" max="0" value="0" step="1">
+                        <div class="slider-label">
+                            <span id="frodoDayLabel">Day 1: Leaves Bag End</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Entry Form -->
+            <section class="entry-section">
+                <h2>Log Your Steps</h2>
+                <form id="entryForm" class="entry-form">
+                    <div class="form-group">
+                        <label for="entryDate">Date:</label>
+                        <input type="date" id="entryDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="entrySteps">Steps:</label>
+                        <input type="number" id="entrySteps" min="0" placeholder="e.g., 10000" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Save Entry</button>
+                        <button type="button" id="clearFormBtn" class="btn btn-secondary">Clear</button>
+                    </div>
+                </form>
+
+                <!-- Entry List -->
+                <div class="entry-list">
+                    <h3>Your Entries</h3>
+                    <div id="entryListContainer">
+                        <p class="empty-message">No entries yet. Start logging your steps!</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Step length: 0.762m per step</p>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/panzoom/9.4.3/panzoom.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
