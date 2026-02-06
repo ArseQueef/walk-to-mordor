@@ -296,6 +296,11 @@ function formatDate(dateISO) {
     });
 }
 
+// Auto-update build version
+const now = new Date();
+const version = `${now.getFullYear()}.${(now.getMonth()+1).toString().padStart(2,'0')}.${now.getDate().toString().padStart(2,'0')}.${now.getHours().toString().padStart(2,'0')}${now.getMinutes().toString().padStart(2,'0')}`;
+document.getElementById('buildVersion').textContent = version;
+
 // Initialize zoom and pan
 function initializeZoom() {
     const mapContainer = document.getElementById('mapContainer');
@@ -312,9 +317,10 @@ function initializeZoom() {
         });
 
         const wrapper = document.getElementById('mapWrapper');
-        wrapper.addEventListener('wheel', (e) => {
-            if (state.panzoomInstance) state.panzoomInstance.zoomWithWheel(e);
-        }, { passive: false });
+     wrapper.addEventListener('wheel', (e) => {
+    if (state.panzoomInstance?.zoomWithWheel) state.panzoomInstance.zoomWithWheel(e);
+}, { passive: false });
+
 
         return;
     }
@@ -367,26 +373,6 @@ function initializeBasicPanZoom() {
 
         applyTransform();
     }
-
-    // Buttons
-    document.getElementById('zoomIn').addEventListener('click', () => {
-        const rect = wrapper.getBoundingClientRect();
-        zoomAt(rect.left + rect.width / 2, rect.top + rect.height / 2, zoomState.scale * 1.2);
-    });
-
-    document.getElementById('zoomOut').addEventListener('click', () => {
-        const rect = wrapper.getBoundingClientRect();
-        zoomAt(rect.left + rect.width / 2, rect.top + rect.height / 2, zoomState.scale / 1.2);
-    });
-
-    document.getElementById('resetZoom').addEventListener('click', () => {
-        zoomState.scale = 1;
-        zoomState.x = 0;
-        zoomState.y = 0;
-        zoomState.pointers.clear();
-        zoomState.lastPinchDist = null;
-        applyTransform();
-    });
 
     // Wheel zoom (desktop)
     wrapper.addEventListener('wheel', (e) => {
