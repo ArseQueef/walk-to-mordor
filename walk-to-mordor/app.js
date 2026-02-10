@@ -13,8 +13,8 @@ let state = {
 
 // Initialize app
 document.addEventListener('DOMContentLoaded', async () => {
+    loadStateFromStorage();  // This MUST come first
     await loadData();
-    loadStateFromStorage();
     setupEventListeners();
     initializeZoom();
     updateUI();
@@ -31,15 +31,27 @@ async function loadData() {
         state.route = await routeResponse.json();
         state.frodoDays = await frodoDaysResponse.json();
         
-        // Setup Frodo day slider
+        // Setup Frodo day slider - use saved position from state
         const slider = document.getElementById('frodoDaySlider');
         slider.max = state.frodoDays.length - 1;
-        slider.value = state.frodoSelectedDayIndex;
+        slider.value = state.frodoSelectedDayIndex;  // This uses the saved value
+        
+        // Force initial Frodo position update
+        updateFrodoDisplay();
         
     } catch (error) {
         console.error('Error loading data:', error);
         alert('Error loading map data. Please ensure data files are present.');
     }
+}
+
+// Save state to localStorage
+function saveStateToStorage() {
+    const toSave = {
+        dailyEntries: state.dailyEntries,
+        frodoSelectedDayIndex: state.frodoSelectedDayIndex
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
 }
 
 // Load state from localStorage
@@ -54,15 +66,6 @@ function loadStateFromStorage() {
             console.error('Error parsing saved data:', error);
         }
     }
-}
-
-// Save state to localStorage
-function saveStateToStorage() {
-    const toSave = {
-        dailyEntries: state.dailyEntries,
-        frodoSelectedDayIndex: state.frodoSelectedDayIndex
-    };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
 }
 
 // Setup event listeners
@@ -226,8 +229,11 @@ function updateMap() {
     const { totalKm } = calculateCumulativeDistance();
     const myPos = interpolatePosition(state.route, totalKm);
     const myDot = document.getElementById('myDot');
-    myDot.setAttribute('cx', myPos.x);
-    myDot.setAttribute('cy', myPos.y);
+    myDot.setAttribute('x', myPos.x - 50);  // Center the image (half of width)
+    myDot.setAttribute('y', myPos.y - 50);  // Center the image (half of height)
+    
+    // Update Frodo position too
+    updateFrodoDisplay();
 }
 
 // Update Frodo display
@@ -243,8 +249,8 @@ function updateFrodoDisplay() {
     // Update Frodo dot position
     const frodoPos = interpolatePosition(state.route, frodoDay.frodoCumulativeKm);
     const frodoDot = document.getElementById('frodoDot');
-    frodoDot.setAttribute('cx', frodoPos.x);
-    frodoDot.setAttribute('cy', frodoPos.y);
+    frodoDot.setAttribute('x', frodoPos.x - 50);  // Subtract half width to center
+    frodoDot.setAttribute('y', frodoPos.y - 50);  // Subtract half height to center
     
     // Update vs Frodo stat
     const { totalKm } = calculateCumulativeDistance();
@@ -312,9 +318,10 @@ function initializeZoom() {
         });
 
         const wrapper = document.getElementById('mapWrapper');
-        wrapper.addEventListener('wheel', (e) => {
-            if (state.panzoomInstance) state.panzoomInstance.zoomWithWheel(e);
-        }, { passive: false });
+     wrapper.addEventListener('wheel', (e) => {
+    if (state.panzoomInstance?.zoomWithWheel) state.panzoomInstance.zoomWithWheel(e);
+}, { passive: false });
+
 
         return;
     }
@@ -367,26 +374,6 @@ function initializeBasicPanZoom() {
 
         applyTransform();
     }
-
-    // Buttons
-    document.getElementById('zoomIn').addEventListener('click', () => {
-        const rect = wrapper.getBoundingClientRect();
-        zoomAt(rect.left + rect.width / 2, rect.top + rect.height / 2, zoomState.scale * 1.2);
-    });
-
-    document.getElementById('zoomOut').addEventListener('click', () => {
-        const rect = wrapper.getBoundingClientRect();
-        zoomAt(rect.left + rect.width / 2, rect.top + rect.height / 2, zoomState.scale / 1.2);
-    });
-
-    document.getElementById('resetZoom').addEventListener('click', () => {
-        zoomState.scale = 1;
-        zoomState.x = 0;
-        zoomState.y = 0;
-        zoomState.pointers.clear();
-        zoomState.lastPinchDist = null;
-        applyTransform();
-    });
 
     // Wheel zoom (desktop)
     wrapper.addEventListener('wheel', (e) => {

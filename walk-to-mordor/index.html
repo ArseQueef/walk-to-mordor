@@ -11,12 +11,12 @@
     <link rel="manifest" href="manifest.json">
 </head>
 <div id="buildTag" style="position:fixed;top:8px;left:8px;z-index:9999;background:#000;color:#fff;padding:4px 8px;font:12px monospace;border-radius:6px;opacity:.8">
-  BUILD: v0.1.25
+  BUILD: v<span id="buildVersion">0.1.40</span>
 </div>
 <body>
     <div class="container">
         <header>
-            <h1>🗻 Walk to Mordor</h1>
+            <h1>Simply Walk to Mordor</h1>
             <p class="subtitle">Track your journey through Middle-earth</p>
         </header>
 
@@ -41,33 +41,28 @@
                 </div>
             </section>
 
+                </section>
+
+                <img src="assets/Breaker.svg" alt="" class="section-divider">
+
+                <section class="entry-section">
+
             <!-- Map Display -->
             <section class="map-section">
                 <h2>Your Journey</h2>
                 <div class="map-wrapper" id="mapWrapper">
                     <div class="map-container" id="mapContainer">
                         <img src="assets/Map_of_Middle-Earth.svg" alt="Middle Earth Map" id="mapImage" draggable="false">
-                        <svg id="mapOverlay" viewBox="0 0 1 1" preserveAspectRatio="none">
-                            <polyline id="routeLine" points="" fill="none" stroke="#8B4513" stroke-width="0.003" />
-                            <circle id="myDot" cx="0" cy="0" r="0.008" fill="#FF4444" stroke="#FFF" stroke-width="0.001" />
-                            <circle id="frodoDot" cx="0" cy="0" r="0.008" fill="#4444FF" stroke="#FFF" stroke-width="0.001" />
+                        <svg id="mapOverlay" viewBox="0 0 3174.5 2373" preserveAspectRatio="xMidYMid meet">
+                            <polyline id="routeLine" points="" fill="none" stroke="#dd350e" stroke-width="8" />
+                            <image id="myDot" x="0" y="0" width="100" height="100" href="assets/me.png" />
+                            <image id="frodoDot" x="-25" y="-25" width="100" height="100" href="assets/Frodo.png" />
                         </svg>
-                    </div>
-                    <div class="map-legend">
-                        <div class="legend-item">
-                            <span class="legend-dot" style="background: #FF4444;"></span>
-                            <span>You</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-dot" style="background: #4444FF;"></span>
-                            <span>Frodo</span>
-                        </div>
                     </div>
                 </div>
 
                 <!-- Frodo Day Selector -->
                 <div class="frodo-selector">
-                    <label for="frodoDaySlider">Frodo's Journey Day:</label>
                     <div class="slider-container">
                         <input type="range" id="frodoDaySlider" min="0" max="0" value="0" step="1">
                         <div class="slider-label">
@@ -76,6 +71,13 @@
                     </div>
                 </div>
             </section>
+
+
+                </section>
+
+                <img src="assets/Breaker.svg" alt="" class="section-divider">
+
+                <section class="entry-section">
 
             <!-- Data Entry Form -->
             <section class="entry-section">
@@ -105,12 +107,24 @@
             </section>
         </main>
 
-        <footer>
-            <p>Step length: 0.762m per step</p>
-        </footer>
+    <footer>
+        <p>Step length: 0.762m per step</p>
+    </footer>
     </div>
+
+        <footer>
+        <img src="assets/Fellowship.svg" alt="Fellowship">
+    </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/panzoom/9.4.3/panzoom.min.js"></script>
     <script src="app.js"></script>
+
+    <script>
+// Auto-update build version
+const now = new Date();
+const version = `${now.getFullYear()}.${(now.getMonth()+1).toString().padStart(2,'0')}.${now.getDate().toString().padStart(2,'0')}.${now.getHours().toString().padStart(2,'0')}${now.getMinutes().toString().padStart(2,'0')}`;
+document.getElementById('buildVersion').textContent = version;
+</script>
+
 </body>
 </html>
