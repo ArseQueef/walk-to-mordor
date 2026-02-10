@@ -10,10 +10,11 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
 </head>
-<div id="buildTag" style="position:fixed;top:8px;left:8px;z-index:9999;background:#000;color:#fff;padding:4px 8px;font:12px monospace;border-radius:6px;opacity:.8">
-  BUILD: v<span id="buildVersion">0.1.40</span>
-</div>
 <body>
+    <div id="buildTag">
+        BUILD: v<span id="buildVersion">0.1.40</span>
+    </div>
+
     <div class="container">
         <header>
             <h1>Simply Walk to Mordor</h1>
@@ -41,11 +42,7 @@
                 </div>
             </section>
 
-                </section>
-
-                <img src="assets/Breaker.svg" alt="" class="section-divider">
-
-                <section class="entry-section">
+            <img src="assets/Breaker.svg" alt="" class="section-divider">
 
             <!-- Map Display -->
             <section class="map-section">
@@ -55,7 +52,7 @@
                         <img src="assets/Map_of_Middle-Earth.svg" alt="Middle Earth Map" id="mapImage" draggable="false">
                         <svg id="mapOverlay" viewBox="0 0 3174.5 2373" preserveAspectRatio="xMidYMid meet">
                             <polyline id="routeLine" points="" fill="none" stroke="#dd350e" stroke-width="8" />
-                            <image id="myDot" x="0" y="0" width="100" height="100" href="assets/me.png" />
+                            <image id="myDot" x="0" y="0" width="100" height="100" href="assets/Me.png" />
                             <image id="frodoDot" x="-25" y="-25" width="100" height="100" href="assets/Frodo.png" />
                         </svg>
                     </div>
@@ -72,12 +69,7 @@
                 </div>
             </section>
 
-
-                </section>
-
-                <img src="assets/Breaker.svg" alt="" class="section-divider">
-
-                <section class="entry-section">
+            <img src="assets/Breaker.svg" alt="" class="section-divider">
 
             <!-- Data Entry Form -->
             <section class="entry-section">
@@ -107,24 +99,21 @@
             </section>
         </main>
 
-    <footer>
-        <p>Step length: 0.762m per step</p>
-    </footer>
+        <footer class="footer-text">
+            <p>Step length: 0.762m per step</p>
+        </footer>
     </div>
 
-        <footer>
+    <footer class="footer-image">
         <img src="assets/Fellowship.svg" alt="Fellowship">
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/panzoom/9.4.3/panzoom.min.js"></script>
     <script src="app.js"></script>
-
     <script>
-// Auto-update build version
-const now = new Date();
-const version = `${now.getFullYear()}.${(now.getMonth()+1).toString().padStart(2,'0')}.${now.getDate().toString().padStart(2,'0')}.${now.getHours().toString().padStart(2,'0')}${now.getMinutes().toString().padStart(2,'0')}`;
-document.getElementById('buildVersion').textContent = version;
-</script>
-
+        const now = new Date();
+        const version = `${now.getFullYear()}.${(now.getMonth()+1).toString().padStart(2,'0')}.${now.getDate().toString().padStart(2,'0')}.${now.getHours().toString().padStart(2,'0')}${now.getMinutes().toString().padStart(2,'0')}`;
+        document.getElementById('buildVersion').textContent = version;
+    </script>
 </body>
 </html>

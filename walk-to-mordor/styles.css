@@ -1,26 +1,20 @@
-/* LOTR Fonts */
+/* ========== Fonts ========== */
 @font-face {
     font-family: 'Ringbearer';
     src: url('fonts/ringbearer.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
 }
 
 @font-face {
     font-family: 'Aniron';
     src: url('fonts/aniron.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
 }
 
 @font-face {
     font-family: 'Hobbiton';
     src: url('fonts/hobbitonbrushhand.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
 }
 
-/* Reset and Base Styles */
+/* ========== Reset & Base ========== */
 * {
     margin: 0;
     padding: 0;
@@ -28,17 +22,15 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemUI, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     background: linear-gradient(135deg, rgba(44, 24, 16, 0.4) 0%, rgba(26, 15, 10, 0.5) 100%),
                 url('assets/background.jpg') center/cover fixed;
     color: #f5f5f5;
     min-height: 100vh;
-    padding: 20px 20px 0 20px;  /* Remove bottom padding */
-    position: relative;
+    padding: 20px 20px 0;
 }
 
-
-/* Add a subtle vignette overlay */
+/* Vignette overlay */
 body::before {
     content: '';
     position: fixed;
@@ -51,6 +43,7 @@ body::before {
     z-index: 0;
 }
 
+/* ========== Layout ========== */
 .container {
     position: relative;
     z-index: 1;
@@ -58,20 +51,25 @@ body::before {
     margin: 0 auto;
 }
 
-/* Header - Clean minimal style */
+/* ========== Build Tag ========== */
+#buildTag {
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    z-index: 9999;
+    background: #000;
+    color: #fff;
+    padding: 4px 8px;
+    font: 12px monospace;
+    border-radius: 6px;
+    opacity: 0.8;
+}
+
+/* ========== Header ========== */
 header {
     text-align: center;
     margin-bottom: 30px;
     padding: 30px;
-    background: transparent;
-    border: none;
-    box-shadow: none;
-}
-
-/* Remove corner decorations */
-header::before,
-header::after {
-    display: none;
 }
 
 h1 {
@@ -97,73 +95,10 @@ h2 {
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
 }
 
-/* Stat labels with Hobbiton */
-.stat-label {
-    font-family: 'Aniron';
-    font-size: 1em;
-    color: #ebd5b3;
-    margin-bottom: 8px;
-    letter-spacing: 1px;
-    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
-}
-
-/* Footer text with Hobbiton */
-footer p {
-    font-family: 'Hobbiton';
-    margin-bottom: 15px;
-}
-
-/* Optional: Use Hobbiton for the Frodo day label */
-.slider-label {
-    font-family: 'Aniron';
-    text-align: center;
-    color: #f5f5f5;
-    font-size: 1.1em;
-    font-weight: 500;
-}
-
-/* All sections - minimal transparent with fade edges */
+/* ========== Sections ========== */
 section {
     padding: 15px;
-    border: none;
-    box-shadow: none;
     margin-bottom: 0;
-}
-
-/* Stat cards - subtle background only */
-
-/* Summary Panel - 2x2 grid */
-.summary-panel {
-    background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(36, 26, 19, 0.1) 10%,
-        rgba(36, 26, 19, 0.7) 50%,
-        rgba(36, 26, 19, 0.1) 90%,
-        transparent 100%
-    ); 
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px 0;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-/* Stat cards - no box, just text */
-.stat-card {
-    padding: 15px;
-    border-radius: 0;
-    border: none;
-    text-align: center;
-    box-shadow: none;
-}
-
-.stat-value {
-    font-family: 'Aniron';
-    font-size: 1.8em;
-    font-weight: bold;
-    color: #FFD700;
-    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
 }
 
 .section-divider {
@@ -176,20 +111,57 @@ section {
     filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
 }
 
-/* Map Section */
+/* ========== Summary Panel ========== */
+.summary-panel {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(36, 26, 19, 0.1) 10%,
+        rgba(36, 26, 19, 0.7) 50%,
+        rgba(36, 26, 19, 0.1) 90%,
+        transparent 100%
+    );
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 0;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.stat-card {
+    padding: 15px;
+    text-align: center;
+}
+
+.stat-label {
+    font-family: 'Aniron';
+    font-size: 0.9em;
+    color: #ebd5b3;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+.stat-value {
+    font-family: 'Aniron';
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #FFD700;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+/* ========== Map ========== */
 .map-wrapper {
     position: relative;
     width: 100%;
-    height: auto;
-    background: rgb(235, 213, 179, 1);
+    background: rgb(235, 213, 179);
     border-radius: 8px;
     overflow: hidden;
-    border: none;
     margin-bottom: 20px;
     touch-action: none;
     cursor: grab;
 }
-
 
 .map-wrapper:active {
     cursor: grabbing;
@@ -205,7 +177,6 @@ section {
 
 #mapImage {
     width: 100%;
-    height: 100%;
     display: block;
 }
 
@@ -218,8 +189,7 @@ section {
     pointer-events: none;
 }
 
-
-/* Map Controls */
+/* Map Controls (unused but kept for future use) */
 .map-controls {
     position: absolute;
     bottom: 10px;
@@ -230,28 +200,21 @@ section {
     z-index: 10;
 }
 
-
-/* Frodo Selector */
+/* ========== Frodo Selector ========== */
 .frodo-selector {
     margin-top: 20px;
 }
 
-.frodo-selector label {
-    display: block;
-    color: #ebd5b3;
-    margin-bottom: 10px;
-    font-weight: 600;
-}
-
 .slider-container {
-background: linear-gradient(
+    background: linear-gradient(
         90deg,
         transparent 0%,
         rgba(36, 26, 19, 0.1) 10%,
         rgba(36, 26, 19, 0.7) 50%,
         rgba(36, 26, 19, 0.1) 90%,
         transparent 100%
-    );     padding: 15px;
+    );
+    padding: 15px;
     border-radius: 8px;
 }
 
@@ -260,7 +223,7 @@ background: linear-gradient(
     height: 6px;
     -webkit-appearance: none;
     appearance: none;
-    background: rgba(139, 69, 19, 0.502);
+    background: rgba(139, 69, 19, 0.5);
     border-radius: 3px;
     outline: none;
     margin-bottom: 10px;
@@ -271,7 +234,7 @@ background: linear-gradient(
     appearance: none;
     width: 20px;
     height: 20px;
-    background: rgba(139, 69, 19, 1);
+    background: rgb(139, 69, 19);
     border: 2px solid #fff;
     border-radius: 50%;
     cursor: pointer;
@@ -280,20 +243,21 @@ background: linear-gradient(
 #frodoDaySlider::-moz-range-thumb {
     width: 20px;
     height: 20px;
-    background: rgba(139, 69, 19, 1);
+    background: rgb(139, 69, 19);
     border: 2px solid #fff;
     border-radius: 50%;
     cursor: pointer;
 }
 
 .slider-label {
+    font-family: 'Aniron';
     text-align: center;
     color: #ebd5b3;
     font-size: 1em;
     font-weight: 500;
 }
 
-/* Entry Form */
+/* ========== Entry Form ========== */
 .entry-form {
     background: rgba(26, 15, 10, 0.5);
     padding: 20px;
@@ -333,6 +297,7 @@ background: linear-gradient(
     gap: 10px;
 }
 
+/* ========== Buttons ========== */
 .btn {
     padding: 12px 24px;
     border: none;
@@ -375,7 +340,7 @@ background: linear-gradient(
     background: rgba(180, 40, 40, 0.8);
 }
 
-/* Entry List */
+/* ========== Entry List ========== */
 .entry-list {
     margin-top: 20px;
 }
@@ -423,29 +388,49 @@ background: linear-gradient(
     font-style: italic;
 }
 
-/* Footer */
-
-footer {
+/* ========== Footer ========== */
+.footer-text {
     text-align: center;
     margin-top: 30px;
-    padding: 0;
     color: #aaa;
     font-size: 0.9em;
 }
 
-footer p {
-    margin-bottom: 0px;
+.footer-text p {
+    font-family: 'Hobbiton';
 }
 
-footer img {
-    width: 100vw;  /* Full viewport width */
+.footer-image {
+    text-align: center;
+}
+
+.footer-image img {
+    width: 100vw;
     height: auto;
     display: block;
-    margin: 0;
     opacity: 0.75;
 }
 
-/* Responsive Design */
+/* ========== Scrollbar ========== */
+#entryListContainer::-webkit-scrollbar {
+    width: 8px;
+}
+
+#entryListContainer::-webkit-scrollbar-track {
+    background: rgba(26, 15, 10, 0.5);
+    border-radius: 4px;
+}
+
+#entryListContainer::-webkit-scrollbar-thumb {
+    background: rgba(139, 69, 19, 0.7);
+    border-radius: 4px;
+}
+
+#entryListContainer::-webkit-scrollbar-thumb:hover {
+    background: rgba(139, 69, 19, 0.9);
+}
+
+/* ========== Responsive ========== */
 @media (max-width: 768px) {
     body {
         padding: 10px;
@@ -453,10 +438,6 @@ footer img {
 
     h1 {
         font-size: 2em;
-    }
-
-    .summary-panel {
-        grid-template-columns: repeat(2, 1fr);
     }
 
     .form-actions {
@@ -480,23 +461,4 @@ footer img {
     .stat-value {
         font-size: 1.4em;
     }
-}
-
-/* Scrollbar Styling */
-#entryListContainer::-webkit-scrollbar {
-    width: 8px;
-}
-
-#entryListContainer::-webkit-scrollbar-track {
-    background: rgba(26, 15, 10, 0.5);
-    border-radius: 4px;
-}
-
-#entryListContainer::-webkit-scrollbar-thumb {
-    background: rgba(139, 69, 19, 0.7);
-    border-radius: 4px;
-}
-
-#entryListContainer::-webkit-scrollbar-thumb:hover {
-    background: rgba(139, 69, 19, 0.9);
 }
