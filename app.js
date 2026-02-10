@@ -5,9 +5,11 @@ const STORAGE_KEY = 'walkToMordor';
 // Global state
 let state = {
     dailyEntries: [],
-    frodoSelectedDayIndex: 0,
+    journeyStartDate: null,
+    lastSeenLandmarkDay: null, // tracks which landmark toast was last shown
     route: null,
     frodoDays: null,
+    frodoDailyKm: [],
     panzoomInstance: null
 };
 
@@ -18,6 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupEventListeners();
     initializeZoom();
     updateUI();
+    checkForLandmarkToast();
 });
 
 // Load route and Frodo data
@@ -31,9 +34,7 @@ async function loadData() {
         state.route = await routeResponse.json();
         state.frodoDays = await frodoDaysResponse.json();
 
-        const slider = document.getElementById('frodoDaySlider');
-        slider.max = state.frodoDays.length - 1;
-        slider.value = state.frodoSelectedDayIndex;
+        state.frodoDailyKm = buildFrodoDailyKm(state.frodoDays);
 
         updateFrodoDisplay();
     } catch (error) {
@@ -42,11 +43,153 @@ async function loadData() {
     }
 }
 
+// Interpolate Frodo's cumulative km for every day 1–200
+function buildFrodoDailyKm(landmarks) {
+    const maxDay = landmarks[landmarks.length - 1].dayIndex;
+    const daily = new Array(maxDay + 1);
+
+    for (let day = 1; day <= maxDay; day++) {
+        let before = landmarks[0];
+        let after = landmarks[landmarks.length - 1];
+
+        for (let i = 0; i < landmarks.length - 1; i++) {
+            if (day >= landmarks[i].dayIndex && day <= landmarks[i + 1].dayIndex) {
+                before = landmarks[i];
+                after = landmarks[i + 1];
+                break;
+            }
+        }
+
+        if (day <= before.dayIndex) {
+            daily[day] = before.frodoCumulativeKm;
+        } else if (day >= after.dayIndex) {
+            daily[day] = after.frodoCumulativeKm;
+        } else {
+            const span = after.dayIndex - before.dayIndex;
+            const t = (day - before.dayIndex) / span;
+            daily[day] = before.frodoCumulativeKm + t * (after.frodoCumulativeKm - before.frodoCumulativeKm);
+        }
+    }
+
+    return daily;
+}
+
+// Get current Frodo day based on journey start date
+function getCurrentFrodoDay() {
+    if (!state.journeyStartDate) return null;
+
+    const start = new Date(state.journeyStartDate + 'T00:00:00');
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const diffMs = today - start;
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    const dayIndex = diffDays + 1;
+
+    return Math.max(1, Math.min(dayIndex, 200));
+}
+
+// Get the nearest landmark label for a given day
+function getLandmarkForDay(dayIndex) {
+    if (!state.frodoDays) return '';
+
+    let landmark = state.frodoDays[0];
+    for (const lm of state.frodoDays) {
+        if (lm.dayIndex <= dayIndex) {
+            landmark = lm;
+        } else {
+            break;
+        }
+    }
+
+    let next = null;
+    for (const lm of state.frodoDays) {
+        if (lm.dayIndex > dayIndex) {
+            next = lm;
+            break;
+        }
+    }
+
+    if (landmark.dayIndex === dayIndex) {
+        return landmark.label;
+    } else if (next) {
+        const daysUntil = next.dayIndex - dayIndex;
+        return `${landmark.label} → ${next.label} (${daysUntil} day${daysUntil !== 1 ? 's' : ''} away)`;
+    } else {
+        return landmark.label;
+    }
+}
+
+// Get the exact landmark if today IS a landmark day
+function getExactLandmark(dayIndex) {
+    if (!state.frodoDays) return null;
+    return state.frodoDays.find(lm => lm.dayIndex === dayIndex) || null;
+}
+
+// Check if we should show a landmark toast
+function checkForLandmarkToast() {
+    const frodoDay = getCurrentFrodoDay();
+    if (!frodoDay) return;
+
+    const landmark = getExactLandmark(frodoDay);
+    if (!landmark || !landmark.quote) return;
+
+    // Only show if we haven't already shown this landmark
+    if (state.lastSeenLandmarkDay === landmark.dayIndex) return;
+
+    state.lastSeenLandmarkDay = landmark.dayIndex;
+    saveStateToStorage();
+
+    // Small delay so the page renders first
+    setTimeout(() => {
+        showLandmarkToast(landmark);
+    }, 500);
+}
+
+// Show landmark toast notification
+function showLandmarkToast(landmark) {
+    // Remove any existing toast
+    const existing = document.getElementById('landmarkToast');
+    if (existing) existing.remove();
+
+    const toast = document.createElement('div');
+    toast.id = 'landmarkToast';
+    toast.className = 'landmark-toast';
+    toast.innerHTML = `
+        <div class="toast-content">
+            <div class="toast-title">Frodo has reached ${landmark.label}</div>
+            <div class="toast-quote">"${landmark.quote}"</div>
+            <div class="toast-day">Day ${landmark.dayIndex} of 200</div>
+        </div>
+        <button class="toast-close" onclick="dismissToast()">✕</button>
+    `;
+
+    document.body.appendChild(toast);
+
+    // Trigger animation
+    requestAnimationFrame(() => {
+        toast.classList.add('toast-visible');
+    });
+}
+
+function dismissToast() {
+    const toast = document.getElementById('landmarkToast');
+    if (!toast) return;
+
+    toast.classList.remove('toast-visible');
+    toast.classList.add('toast-hiding');
+
+    setTimeout(() => {
+        toast.remove();
+    }, 400);
+}
+
 // Save state to localStorage
 function saveStateToStorage() {
     const toSave = {
         dailyEntries: state.dailyEntries,
-        frodoSelectedDayIndex: state.frodoSelectedDayIndex
+        journeyStartDate: state.journeyStartDate,
+        lastSeenLandmarkDay: state.lastSeenLandmarkDay
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
 }
@@ -58,7 +201,8 @@ function loadStateFromStorage() {
         try {
             const parsed = JSON.parse(saved);
             state.dailyEntries = parsed.dailyEntries || [];
-            state.frodoSelectedDayIndex = parsed.frodoSelectedDayIndex || 0;
+            state.journeyStartDate = parsed.journeyStartDate || null;
+            state.lastSeenLandmarkDay = parsed.lastSeenLandmarkDay || null;
         } catch (error) {
             console.error('Error parsing saved data:', error);
         }
@@ -73,11 +217,47 @@ function setupEventListeners() {
     const clearBtn = document.getElementById('clearFormBtn');
     if (clearBtn) clearBtn.addEventListener('click', clearForm);
 
-    const slider = document.getElementById('frodoDaySlider');
-    if (slider) slider.addEventListener('input', handleFrodoDayChange);
-
     const mapWrapper = document.getElementById('mapWrapper');
     if (mapWrapper) mapWrapper.addEventListener('dragstart', (e) => e.preventDefault());
+
+    const startDateBtn = document.getElementById('startDateBtn');
+    if (startDateBtn) startDateBtn.addEventListener('click', openStartDateModal);
+
+    const saveStartDate = document.getElementById('saveStartDate');
+    if (saveStartDate) saveStartDate.addEventListener('click', handleSaveStartDate);
+
+    const cancelStartDate = document.getElementById('cancelStartDate');
+    if (cancelStartDate) cancelStartDate.addEventListener('click', closeStartDateModal);
+
+    const modalOverlay = document.getElementById('startDateModal');
+    if (modalOverlay) modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) closeStartDateModal();
+    });
+}
+
+// Start date modal
+function openStartDateModal() {
+    const input = document.getElementById('startDateInput');
+    input.value = state.journeyStartDate || new Date().toISOString().split('T')[0];
+    document.getElementById('startDateModal').hidden = false;
+}
+
+function closeStartDateModal() {
+    document.getElementById('startDateModal').hidden = true;
+}
+
+function handleSaveStartDate() {
+    const dateValue = document.getElementById('startDateInput').value;
+    if (!dateValue) {
+        alert('Please select a date.');
+        return;
+    }
+    state.journeyStartDate = dateValue;
+    state.lastSeenLandmarkDay = null; // Reset so landmarks can show again
+    saveStateToStorage();
+    closeStartDateModal();
+    updateUI();
+    checkForLandmarkToast();
 }
 
 // Handle form submission
@@ -113,13 +293,6 @@ function clearForm() {
     document.getElementById('entryDate').valueAsDate = new Date();
     document.getElementById('entrySteps').value = '';
     document.getElementById('entrySteps').focus();
-}
-
-// Handle Frodo day slider change
-function handleFrodoDayChange(e) {
-    state.frodoSelectedDayIndex = parseInt(e.target.value);
-    saveStateToStorage();
-    updateFrodoDisplay();
 }
 
 // Delete entry
@@ -166,11 +339,14 @@ function updateSummary() {
         document.getElementById('routeProgress').textContent = Math.min(progress, 100).toFixed(1) + '%';
     }
 
-    if (state.frodoDays && state.frodoDays.length > 0) {
-        const frodoDay = state.frodoDays[state.frodoSelectedDayIndex];
-        const diff = totalKm - frodoDay.frodoCumulativeKm;
+    const frodoDay = getCurrentFrodoDay();
+    if (frodoDay && state.frodoDailyKm.length > 0) {
+        const frodoKm = state.frodoDailyKm[frodoDay] || 0;
+        const diff = totalKm - frodoKm;
         const sign = diff >= 0 ? '+' : '';
         document.getElementById('vsFromo').textContent = sign + diff.toFixed(2) + ' km';
+    } else {
+        document.getElementById('vsFromo').textContent = '—';
     }
 }
 
@@ -219,20 +395,35 @@ function updateMap() {
 
 // Update Frodo display
 function updateFrodoDisplay() {
-    if (!state.frodoDays || !state.route) return;
+    if (!state.frodoDailyKm || state.frodoDailyKm.length === 0 || !state.route) return;
 
-    const frodoDay = state.frodoDays[state.frodoSelectedDayIndex];
+    const frodoDay = getCurrentFrodoDay();
+    const label = document.getElementById('frodoDayLabel');
 
-    document.getElementById('frodoDayLabel').textContent =
-        `Day ${frodoDay.dayIndex}: ${frodoDay.label}`;
+    if (!frodoDay) {
+        label.textContent = 'Set a start date to track Frodo';
+        const frodoDot = document.getElementById('frodoDot');
+        frodoDot.setAttribute('x', -200);
+        frodoDot.setAttribute('y', -200);
+        return;
+    }
 
-    const frodoPos = interpolatePosition(state.route, frodoDay.frodoCumulativeKm);
+    const frodoKm = state.frodoDailyKm[frodoDay] || 0;
+    const landmarkText = getLandmarkForDay(frodoDay);
+
+    if (frodoDay >= 200) {
+        label.textContent = `Day ${frodoDay}: ${landmarkText} (Journey complete!)`;
+    } else {
+        label.textContent = `Day ${frodoDay}: ${landmarkText}`;
+    }
+
+    const frodoPos = interpolatePosition(state.route, frodoKm);
     const frodoDot = document.getElementById('frodoDot');
     frodoDot.setAttribute('x', frodoPos.x - 50);
     frodoDot.setAttribute('y', frodoPos.y - 50);
 
     const { totalKm } = calculateCumulativeDistance();
-    const diff = totalKm - frodoDay.frodoCumulativeKm;
+    const diff = totalKm - frodoKm;
     const sign = diff >= 0 ? '+' : '';
     document.getElementById('vsFromo').textContent = sign + diff.toFixed(2) + ' km';
 }
@@ -297,7 +488,6 @@ function initializeZoom() {
         return;
     }
 
-    // Fallback: built-in pan/zoom (works offline)
     console.warn('Panzoom library not loaded — using built-in pan/zoom fallback.');
     initializeBasicPanZoom();
 }
@@ -344,7 +534,6 @@ function initializeBasicPanZoom() {
         applyTransform();
     }
 
-    // Wheel zoom
     wrapper.addEventListener('wheel', (e) => {
         e.preventDefault();
         const delta = -e.deltaY;
@@ -352,7 +541,6 @@ function initializeBasicPanZoom() {
         zoomAt(e.clientX, e.clientY, zoomState.scale * factor);
     }, { passive: false });
 
-    // Pointer pan + pinch
     wrapper.addEventListener('pointerdown', (e) => {
         wrapper.setPointerCapture(e.pointerId);
         zoomState.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
@@ -369,7 +557,6 @@ function initializeBasicPanZoom() {
 
         zoomState.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
 
-        // Pinch zoom
         if (zoomState.pointers.size === 2) {
             const pts = Array.from(zoomState.pointers.values());
             const dist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
@@ -385,7 +572,6 @@ function initializeBasicPanZoom() {
             return;
         }
 
-        // Single pointer pan
         if (zoomState.panning && zoomState.pointers.size === 1) {
             zoomState.x += e.clientX - zoomState.lastX;
             zoomState.y += e.clientY - zoomState.lastY;
@@ -407,5 +593,6 @@ function initializeBasicPanZoom() {
     applyTransform();
 }
 
-// Make deleteEntry available globally
+// Make functions available globally
 window.deleteEntry = deleteEntry;
+window.dismissToast = dismissToast;

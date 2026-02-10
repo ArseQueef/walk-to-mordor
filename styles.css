@@ -1,7 +1,7 @@
 /* ========== Fonts ========== */
 @font-face {
     font-family: 'Ringbearer';
-    src: url('fonts/ringbearer.TTF') format('truetype');
+    src: url('fonts/ringbearer.ttf') format('truetype');
 }
 
 @font-face {
@@ -189,7 +189,6 @@ section {
     pointer-events: none;
 }
 
-/* Map Controls (unused but kept for future use) */
 .map-controls {
     position: absolute;
     bottom: 10px;
@@ -200,8 +199,8 @@ section {
     z-index: 10;
 }
 
-/* ========== Frodo Selector ========== */
-.frodo-selector {
+/* ========== Frodo Display ========== */
+.frodo-display {
     margin-top: 20px;
 }
 
@@ -216,37 +215,6 @@ section {
     );
     padding: 15px;
     border-radius: 8px;
-}
-
-#frodoDaySlider {
-    width: 100%;
-    height: 6px;
-    -webkit-appearance: none;
-    appearance: none;
-    background: rgba(139, 69, 19, 0.5);
-    border-radius: 3px;
-    outline: none;
-    margin-bottom: 10px;
-}
-
-#frodoDaySlider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    background: rgb(139, 69, 19);
-    border: 2px solid #fff;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-#frodoDaySlider::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    background: rgb(139, 69, 19);
-    border: 2px solid #fff;
-    border-radius: 50%;
-    cursor: pointer;
 }
 
 .slider-label {
@@ -340,6 +308,68 @@ section {
     background: rgba(180, 40, 40, 0.8);
 }
 
+/* ========== Start Date Button (subtle) ========== */
+.start-date-btn {
+    background: none;
+    border: none;
+    color: rgba(170, 170, 170, 0.4);
+    font-size: 0.75em;
+    cursor: pointer;
+    padding: 5px 10px;
+    margin-top: 8px;
+    transition: color 0.3s ease;
+}
+
+.start-date-btn:hover {
+    color: rgba(170, 170, 170, 0.8);
+}
+
+/* ========== Modal ========== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.modal-overlay[hidden] {
+    display: none;
+}
+
+.modal {
+    background: rgb(36, 26, 19);
+    border: 1px solid rgba(139, 69, 19, 0.6);
+    border-radius: 12px;
+    padding: 25px;
+    max-width: 400px;
+    width: 90%;
+}
+
+.modal h3 {
+    font-family: 'Aniron', serif;
+    color: #ebd5b3;
+    font-size: 1.1em;
+    margin-bottom: 12px;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+.modal p {
+    color: #aaa;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.modal .form-actions {
+    margin-top: 15px;
+}
+
 /* ========== Entry List ========== */
 .entry-list {
     margin-top: 20px;
@@ -430,6 +460,77 @@ section {
     background: rgba(139, 69, 19, 0.9);
 }
 
+/* ========== Landmark Toast ========== */
+.landmark-toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(120%);
+    background: linear-gradient(135deg, rgb(36, 26, 19) 0%, rgb(52, 36, 24) 100%);
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    border-radius: 12px;
+    padding: 20px 24px;
+    max-width: 380px;
+    width: 90%;
+    z-index: 10001;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.landmark-toast.toast-visible {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+.landmark-toast.toast-hiding {
+    transform: translateX(-50%) translateY(120%);
+    opacity: 0;
+}
+
+.toast-content {
+    flex: 1;
+}
+
+.toast-title {
+    font-family: 'Aniron', serif;
+    color: #FFD700;
+    font-size: 0.85em;
+    margin-bottom: 8px;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+.toast-quote {
+    color: #ebd5b3;
+    font-style: italic;
+    font-size: 0.95em;
+    line-height: 1.5;
+    margin-bottom: 6px;
+}
+
+.toast-day {
+    color: rgba(170, 170, 170, 0.6);
+    font-size: 0.8em;
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    color: rgba(170, 170, 170, 0.5);
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.toast-close:hover {
+    color: #ebd5b3;
+}
+
 /* ========== Responsive ========== */
 @media (max-width: 768px) {
     body {
@@ -460,5 +561,17 @@ section {
 
     .stat-value {
         font-size: 1.4em;
+    }
+}
+
+@media (max-width: 768px) {
+    .entry-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .entry-item .btn-danger {
+        align-self: flex-end;
     }
 }

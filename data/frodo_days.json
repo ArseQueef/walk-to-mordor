@@ -2,167 +2,199 @@
   {
     "dayIndex": 1,
     "label": "Leaves Bag End",
-    "frodoCumulativeKm": 0.0
+    "frodoCumulativeKm": 0.0,
+    "quote": "The Road goes ever on and on, down from the door where it began. Now far ahead the Road has gone, and I must follow, if I can."
   },
   {
     "dayIndex": 3,
     "label": "Bucklebury Ferry",
-    "frodoCumulativeKm": 80.25
+    "frodoCumulativeKm": 80.25,
+    "quote": "Short cuts make long delays, but inns make longer ones. The Shire lay behind them now — quiet fields giving way to mist and uncertainty."
   },
   {
     "dayIndex": 7,
     "label": "Tom Bombadil's House",
-    "frodoCumulativeKm": 111.82
+    "frodoCumulativeKm": 111.82,
+    "quote": "Old Tom Bombadil is a merry fellow — bright blue his jacket is, and his boots are yellow. Eldest, that's what I am. Tom remembers the first raindrop and the first acorn."
   },
   {
     "dayIndex": 12,
     "label": "Arrives at Bree",
-    "frodoCumulativeKm": 179.86
+    "frodoCumulativeKm": 179.86,
+    "quote": "All that is gold does not glitter, not all those who wander are lost. The old that is strong does not wither — deep roots are not reached by the frost."
   },
   {
     "dayIndex": 17,
     "label": "Weathertop",
-    "frodoCumulativeKm": 299.62
+    "frodoCumulativeKm": 299.62,
+    "quote": "They have drawn too much attention to themselves. The Nazgûl are abroad — nine riders in black, and the hill of Amon Sûl offers no true shelter from the Enemy's gaze."
   },
   {
     "dayIndex": 24,
     "label": "Ford of Bruinen",
-    "frodoCumulativeKm": 389.7
+    "frodoCumulativeKm": 389.7,
+    "quote": "If you want him, come and claim him! The power of the Elven-lord flooded the river, and white horses of foam rose in fury against the Nine."
   },
   {
     "dayIndex": 25,
     "label": "Rivendell",
-    "frodoCumulativeKm": 637.52
+    "frodoCumulativeKm": 637.52,
+    "quote": "The Last Homely House East of the Sea. His house was perfect, whether you liked food, or sleep, or work, or story-telling, or singing, or just sitting and thinking best, or a pleasant mixture of them all."
   },
   {
     "dayIndex": 65,
     "label": "Leaves Rivendell",
-    "frodoCumulativeKm": 637.52
+    "frodoCumulativeKm": 637.52,
+    "quote": "The Company of the Ring shall be Nine — and the Nine Walkers shall be set against the Nine Riders. You shall be the Fellowship of the Ring."
   },
   {
     "dayIndex": 70,
     "label": "Caradhras",
-    "frodoCumulativeKm": 803.7
+    "frodoCumulativeKm": 803.7,
+    "quote": "There is a fell voice on the air. Caradhras the Cruel has not forgiven the races of old for the wounds they dealt his roots, and the mountain will not suffer their passage."
   },
   {
     "dayIndex": 78,
     "label": "Moria Gate",
-    "frodoCumulativeKm": 924.4
+    "frodoCumulativeKm": 924.4,
+    "quote": "Speak, friend, and enter. The Doors of Durin, Lord of Moria — built by the craft of Celebrimbor in the days when Eregion and Khazad-dûm were bound in friendship."
   },
   {
     "dayIndex": 81,
     "label": "Exits Moria",
-    "frodoCumulativeKm": 1012.49
+    "frodoCumulativeKm": 1012.49,
+    "quote": "You cannot pass! I am a servant of the Secret Fire, wielder of the flame of Anor. The dark fire will not avail you, flame of Udûn. Go back to the Shadow!"
   },
   {
     "dayIndex": 83,
     "label": "Lothl\u00f3rien",
-    "frodoCumulativeKm": 1072.64
+    "frodoCumulativeKm": 1072.64,
+    "quote": "The heart of Elvendom on earth. In this place, time does not wither the golden leaves, and the memory of the Elder Days lives still beneath the mellyrn."
   },
   {
     "dayIndex": 113,
     "label": "Leaves Lothl\u00f3rien",
-    "frodoCumulativeKm": 1125.92
+    "frodoCumulativeKm": 1125.92,
+    "quote": "I give you the light of Eärendil, our most beloved star. May it be a light to you in dark places, when all other lights go out."
   },
   {
     "dayIndex": 117,
     "label": "Parth Galen",
-    "frodoCumulativeKm": 1294.19
+    "frodoCumulativeKm": 1294.19,
+    "quote": "The lawn of Parth Galen lay shimmering, and the Argonath towered behind them — the Pillars of the Kings, carved in the likeness of Isildur and Anárion in the days of Gondor's might."
   },
   {
     "dayIndex": 118,
     "label": "Breaking of Fellowship",
-    "frodoCumulativeKm": 1546.27
+    "frodoCumulativeKm": 1546.27,
+    "quote": "I would have gone with you to the end, into the very fires of Mordor. I know. Look after the others, especially Sam. He will not understand."
   },
   {
     "dayIndex": 123,
     "label": "Emyn Muil",
-    "frodoCumulativeKm": 1611.47
+    "frodoCumulativeKm": 1611.47,
+    "quote": "This is the way in — a labyrinth of razor-sharp rocks, where even the air tasted of stone and weariness. Somewhere behind, a creature followed."
   },
   {
     "dayIndex": 129,
     "label": "Dead Marshes",
-    "frodoCumulativeKm": 1672.09
+    "frodoCumulativeKm": 1672.09,
+    "quote": "Don't follow the lights. There are dead things — dead faces in the water. All dead, from battles long ago. Men and Elves and Orcs, the marshes had swallowed them all."
   },
   {
     "dayIndex": 138,
     "label": "Black Gate",
-    "frodoCumulativeKm": 1726.31
+    "frodoCumulativeKm": 1726.31,
+    "quote": "The Black Gate is closed. The strength of the gate lies not in stone or iron, but in the will of Sauron — and none may pass who do not serve the Dark Tower."
   },
   {
     "dayIndex": 145,
     "label": "Ithilien",
-    "frodoCumulativeKm": 1805.09
+    "frodoCumulativeKm": 1805.09,
+    "quote": "The garden of Gondor now desolate kept still a dishevelled dryad loveliness. It would have been a fair place once — before the Shadow crept eastward."
   },
   {
     "dayIndex": 147,
     "label": "Captured by Faramir",
-    "frodoCumulativeKm": 1840.5
+    "frodoCumulativeKm": 1840.5,
+    "quote": "A chance for Faramir, Captain of Gondor, to show his quality. I do not wish for such triumphs. War must be, while we defend our lives — but I do not love the bright sword for its sharpness."
   },
   {
     "dayIndex": 151,
     "label": "Henneth Ann\u00fbn",
-    "frodoCumulativeKm": 1848.76
+    "frodoCumulativeKm": 1848.76,
+    "quote": "The Window of the Sunset. Here the last rangers of Gondor kept watch against the darkness, hidden behind a curtain of falling water that caught the dying light."
   },
   {
     "dayIndex": 155,
     "label": "Cross-roads",
-    "frodoCumulativeKm": 1862.94
+    "frodoCumulativeKm": 1862.94,
+    "quote": "The old king's head — it was lying rolled away by the roadside. But look! The light of the setting sun crowned it with gold, and the eyes were calm."
   },
   {
     "dayIndex": 158,
     "label": "Stairs of Cirith Ungol",
-    "frodoCumulativeKm": 1896.33
+    "frodoCumulativeKm": 1896.33,
+    "quote": "Up, up the great staircase they climbed. It was dark as the pits of Morgoth — carved by hands long vanished, in the days when Minas Ithil still gleamed with silver light."
   },
   {
     "dayIndex": 161,
     "label": "Shelob's Lair",
-    "frodoCumulativeKm": 1919.93
+    "frodoCumulativeKm": 1919.93,
+    "quote": "There agelong she had dwelt, an evil thing in spider-form. She who was there before Sauron, before the first stone of Barad-dûr — Shelob, last child of Ungoliant."
   },
   {
     "dayIndex": 162,
     "label": "Frodo Captured",
-    "frodoCumulativeKm": 1957.67
+    "frodoCumulativeKm": 1957.67,
+    "quote": "I'm going to get him, if I have to take all the tower down to the foundations. Don't go where I can't follow! Mr. Frodo!"
   },
   {
     "dayIndex": 177,
     "label": "Tower of Cirith Ungol",
-    "frodoCumulativeKm": 1970.66
+    "frodoCumulativeKm": 1970.66,
+    "quote": "In the tower, stripped of everything, Frodo lay in despair. The weight of the Quest pressed heavier than any chain the Orcs could forge."
   },
   {
     "dayIndex": 178,
     "label": "Rescued by Sam",
-    "frodoCumulativeKm": 1970.66
+    "frodoCumulativeKm": 1970.66,
+    "quote": "I'm coming, Mr. Frodo! In that hour of darkness, the most unlikely hero found a courage beyond the measure of any tale."
   },
   {
     "dayIndex": 182,
     "label": "Morgai Valley",
-    "frodoCumulativeKm": 1976.63
+    "frodoCumulativeKm": 1976.63,
+    "quote": "The land seemed full of creaking and cracking and sly noises. Even in the pits of Angband, Húrin had not felt a weariness so deep as this."
   },
   {
     "dayIndex": 188,
     "label": "Plains of Gorgoroth",
-    "frodoCumulativeKm": 1976.63
+    "frodoCumulativeKm": 1976.63,
+    "quote": "A bitter, desolate land. No water, no green thing. The very air was a poisonous fume, and the ground burned beneath their feet."
   },
   {
     "dayIndex": 194,
     "label": "Approaches Mount Doom",
-    "frodoCumulativeKm": 2034.1
+    "frodoCumulativeKm": 2034.1,
+    "quote": "Come, Mr. Frodo! I can't carry it for you, but I can carry you and it as well. So up you get! Sam's going to give you a ride."
   },
   {
     "dayIndex": 198,
     "label": "Climbing Mount Doom",
-    "frodoCumulativeKm": 2034.1
+    "frodoCumulativeKm": 2034.1,
+    "quote": "The last stage of their journey had come. The Mountain loomed before them — Orodruin, the Fire-mountain, where once Sauron had forged the One Ring in the fires of its heart."
   },
   {
     "dayIndex": 199,
     "label": "Sammath Naur (Summit)",
-    "frodoCumulativeKm": 2050.0
+    "frodoCumulativeKm": 2050.0,
+    "quote": "I have come. But I do not choose now to do what I came to do. I will not do this deed. The Ring is mine!"
   },
   {
     "dayIndex": 200,
     "label": "Ring Destroyed",
-    "frodoCumulativeKm": 2050.0
+    "frodoCumulativeKm": 2050.0,
+    "quote": "The eagles are coming! And into the heart of the storm, with a cry that pierced all other sounds, the Eagles of Manwë came from the ancient West."
   }
- 
 ]

@@ -58,12 +58,11 @@
                     </div>
                 </div>
 
-                <!-- Frodo Day Selector -->
-                <div class="frodo-selector">
+                <!-- Frodo Day Display -->
+                <div class="frodo-display">
                     <div class="slider-container">
-                        <input type="range" id="frodoDaySlider" min="0" max="0" value="0" step="1">
                         <div class="slider-label">
-                            <span id="frodoDayLabel">Day 1: Leaves Bag End</span>
+                            <span id="frodoDayLabel">Set a start date to track Frodo</span>
                         </div>
                     </div>
                 </div>
@@ -101,7 +100,23 @@
 
         <footer class="footer-text">
             <p>Step length: 0.762m per step</p>
+            <button id="startDateBtn" class="start-date-btn">Set start date</button>
         </footer>
+    </div>
+
+    <!-- Start Date Modal -->
+    <div id="startDateModal" class="modal-overlay" hidden>
+        <div class="modal">
+            <h3>Set Journey Start Date</h3>
+            <p>Choose the date your journey to Mordor began. Frodo's position will advance day-by-day from this date.</p>
+            <div class="form-group">
+                <input type="date" id="startDateInput">
+            </div>
+            <div class="form-actions">
+                <button id="saveStartDate" class="btn btn-primary">Save</button>
+                <button id="cancelStartDate" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
     </div>
 
     <footer class="footer-image">
