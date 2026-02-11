@@ -2,7 +2,7 @@
   "name": "Walk to Mordor",
   "short_name": "Mordor Walk",
   "description": "Track your daily steps as you journey through Middle-earth",
-  "start_url": "/",
+  "start_url": "/walk-to-mordor/",
   "display": "standalone",
   "background_color": "#2c1810",
   "theme_color": "#2c1810",
